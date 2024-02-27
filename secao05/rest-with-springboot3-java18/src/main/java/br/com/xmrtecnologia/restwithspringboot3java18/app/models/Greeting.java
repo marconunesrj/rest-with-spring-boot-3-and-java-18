@@ -1,4 +1,4 @@
-package br.com.xmrtecnologia.restwithspringboot3java18.app.model;
+package br.com.xmrtecnologia.restwithspringboot3java18.app.models;
 
 public class Greeting {
 
@@ -10,12 +10,12 @@ public class Greeting {
         this.content = content;
     }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public String getContent() {
+        return content;
+    }
       
 }
