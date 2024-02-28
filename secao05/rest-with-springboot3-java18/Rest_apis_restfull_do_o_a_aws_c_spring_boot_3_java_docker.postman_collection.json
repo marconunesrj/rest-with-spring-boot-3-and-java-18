@@ -70,6 +70,24 @@
 					"response": []
 				},
 				{
+					"name": "FindAll V2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/person/v2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"person",
+								"v2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "FindById",
 					"request": {
 						"method": "GET",
@@ -94,7 +112,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Teste 4\",\r\n    \"lastName\": \"Nunes\",\r\n    \"address\": \"Rua Wilson Nunes, 23 - Bacaxá - Saquarema - RJ - Brasil\",\r\n    \"gender\": \"Male\"\r\n}",
+							"raw": "{\r\n    \"firstName\": \"Teste 8\",\r\n    \"lastName\": \"Nunes\",\r\n    \"address\": \"Rua Wilson Nunes, 23 - Bacaxá - Saquarema - RJ - Brasil\",\r\n    \"gender\": \"Male\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,13 +132,40 @@
 					"response": []
 				},
 				{
+					"name": "Create V2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Teste 7\",\r\n    \"lastName\": \"Nunes\",\r\n    \"address\": \"Rua Wilson Nunes, 23 - Bacaxá - Saquarema - RJ - Brasil\",\r\n    \"gender\": \"Male\",\r\n    \"birthDay\": \"1968-04-03T00:00:00-03:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/person/v2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"person",
+								"v2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"1\",\r\n    \"firstName\": \"Marco Cesar\",\r\n    \"lastName\": \"Mendonça Nunes\",\r\n    \"address\": \"Rua Wilson Nunes, 23 - Bacaxá - Saquarema - RJ - Brasil\",\r\n    \"gender\": \"Male\"\r\n}",
+							"raw": "{\r\n    \"id\": \"5\",\r\n    \"firstName\": \"Marco Cesar teste\",\r\n    \"lastName\": \"Mendonça Nunes\",\r\n    \"address\": \"Rua Wilson Nunes, 23 - Bacaxá - Saquarema - RJ - Brasil\",\r\n    \"gender\": \"Male\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -145,13 +190,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/person/4",
+							"raw": "{{base_url}}/person/5",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"person",
-								"4"
+								"5"
 							]
 						}
 					},
