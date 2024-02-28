@@ -20,13 +20,13 @@ import br.com.xmrtecnologia.restwithspringboot3java18.app.services.PersonService
 
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person")
 public class PersonController {
     
     @Autowired
     private PersonServices service;
     
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PersonVO> findAll() {
         return service.findAll();
     }
@@ -36,13 +36,13 @@ public class PersonController {
         return service.findAllV2();
     }
     
-    @GetMapping(value = "/{id}",
+    @GetMapping(value = "/v1/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonVO findById(@PathVariable(value = "id") Long id) {
         return service.findById(id);
     }
     
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(value = "/v1", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonVO create(@RequestBody PersonVO person) {
         return service.create(person);
@@ -54,13 +54,13 @@ public class PersonController {
         return service.createV2(person);
     }
     
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PutMapping(value = "/v1", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonVO update(@RequestBody PersonVO person) {
         return service.update(person);
     }
     
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/v1/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
