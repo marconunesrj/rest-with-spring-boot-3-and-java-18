@@ -1,4 +1,4 @@
-package br.com.xmrtecnologia.restwithspringboot3java18.app.models;
+package br.com.xmrtecnologia.restwithspringboot3java18.app.model;
 
 public class Greeting {
 
