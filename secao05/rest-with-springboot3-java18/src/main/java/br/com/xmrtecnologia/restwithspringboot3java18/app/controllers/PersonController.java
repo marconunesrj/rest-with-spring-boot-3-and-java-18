@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +25,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+//@CrossOrigin   // Se não definir nada ele fica liberado para todos  // Foi feita a configuração através do arquivo: WebConfig.java
 @RestController
 @RequestMapping("/api/person")
 @Tag(name = "People", description = "Endpoints for Managing People")
 public class PersonController {
+    
+//    private final String baseUrl = "http://localhost:8081";
     
     @Autowired
     private PersonServices service;
@@ -78,6 +82,7 @@ public class PersonController {
         return service.findAllV2();
     }
     
+//    @CrossOrigin(origins = baseUrl)  // Foi feita a configuração através do arquivo: WebConfig.java
     @GetMapping(value = "/v1/{id}",
             produces = { MediaType.APPLICATION_JSON, 
                     MediaType.APPLICATION_XML,
@@ -103,6 +108,7 @@ public class PersonController {
         return service.findById(id);
     }
     
+//    @CrossOrigin(origins = {baseUrl, "https://erudio.com.br"})  // Foi feita a configuração através do arquivo: WebConfig.java
     @PostMapping(value = "/v1", 
             consumes = { MediaType.APPLICATION_JSON, 
                     MediaType.APPLICATION_XML,
