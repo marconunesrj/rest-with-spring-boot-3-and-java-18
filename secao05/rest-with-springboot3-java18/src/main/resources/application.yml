@@ -12,9 +12,17 @@ spring:
       ddl-auto: none
     show-sql: false
 springdoc:
-  pathsToMatch: /api/**/v*/**
+  pathsToMatch:
+    - /auth/**
+    - /api/**/v1/**
   swagger-ui:
     use-root-path: true
     
 cors:
   originPatterns: http://localhost:3000,http://localhost:8081,https://erudio.com.br    # Sem espaços depois da vírgula
+
+security:
+  jwt:
+    token:
+      secret-key: 53cr37
+      expire-length: 3600000

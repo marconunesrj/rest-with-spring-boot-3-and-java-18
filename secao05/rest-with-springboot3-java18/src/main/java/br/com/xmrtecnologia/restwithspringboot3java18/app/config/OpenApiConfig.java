@@ -10,7 +10,7 @@ import io.swagger.v3.oas.models.info.License;
 @Configuration
 public class OpenApiConfig {
 	
-    // Para acessar o Swagger -> http://localhost:8080/swagger-ui/index.html
+    // Para acessar o Swagger -> http://localhost:8081/swagger-ui/index.html
 
 	@Bean
 	OpenAPI customOpenAPI() {
