@@ -1,0 +1,16 @@
+#  Este Arquivo é para que o TestContainer construa o container no Docker com o MySql
+#  https://testcontainers.com/
+server:
+  port: 8888  # Porta que o Spring irá executar para testes. http://localhost:8888 
+spring:
+  datasource:  # As outras informações (url, user, password) serão geradas automaticamente pelo TestContainer
+    driver-class-name: com.mysql.cj.jdbc.Driver   # Driver de conexão com o MySql do docker container 
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+springdoc:
+  pathsToMatch: /api/**/v1/**
+  swagger-ui:
+    use-root-path: true
