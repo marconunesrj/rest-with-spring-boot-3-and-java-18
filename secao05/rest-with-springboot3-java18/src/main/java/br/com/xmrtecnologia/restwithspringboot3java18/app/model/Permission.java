@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import br.com.xmrtecnologia.restwithspringboot3java18.app.config.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@Generated  // Utilizada para não fazer parte dos testes coverage jacoco
 @Entity
 @Table(name = "permission")
 public class Permission implements GrantedAuthority, Serializable {

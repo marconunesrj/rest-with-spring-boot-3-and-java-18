@@ -8,6 +8,9 @@ import java.util.List;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 
+import br.com.xmrtecnologia.restwithspringboot3java18.app.config.Generated;
+
+@Generated  // Utilizada para não fazer parte dos testes coverage jacoco
 public class DozerMapper {
 	
 	private static Mapper mapper = DozerBeanMapperBuilder.buildDefault();

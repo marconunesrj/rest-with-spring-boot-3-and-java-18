@@ -169,15 +169,19 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.11</version>
-				<!--
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions>
-				-->
+			    <configuration>
+					<destFile>${jacoco.reportPath}</destFile>
+					<!-- 
+			        <excludes>
+			            <exclude>br/com/xmrtecnologia/restwithspringboot3java18/app/config/*.*</exclude> 
+			            <exclude>com/baeldung/**/*DTO.*</exclude>
+			            <exclude>**/config/*</exclude>
+			            
+			            <exclude>br/com/xmrtecnologia/restwithspringboot3java18/app/controllers/Greeting*.*</exclude>
+			            <exclude>br/com/xmrtecnologia/restwithspringboot3java18/app/controllers/Math*.*</exclude>
+			        </excludes>
+			        -->
+			     </configuration>
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>
@@ -212,9 +216,6 @@
 						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<destFile>${jacoco.reportPath}</destFile>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

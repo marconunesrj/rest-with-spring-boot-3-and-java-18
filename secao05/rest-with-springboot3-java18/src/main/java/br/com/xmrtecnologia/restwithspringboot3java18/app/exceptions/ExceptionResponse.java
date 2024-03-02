@@ -3,6 +3,9 @@ package br.com.xmrtecnologia.restwithspringboot3java18.app.exceptions;
 import java.io.Serializable;
 import java.util.Date;
 
+import br.com.xmrtecnologia.restwithspringboot3java18.app.config.Generated;
+
+@Generated  // Utilizada para não fazer parte dos testes coverage jacoco
 public class ExceptionResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
