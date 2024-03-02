@@ -2,20 +2,27 @@ package br.com.xmrtecnologia.restwithspringboot3java18.app.integrationtests.vo;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+//import com.fasterxml.jackson.annotation.JsonProperty;
+//import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+//import com.github.dozermapper.core.Mapping;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
 
-@JsonPropertyOrder({"id", "address", "first_name", "last_name", "gender"})
+@XmlRootElement
+//@JsonPropertyOrder({"id", "address", "first_name", "last_name", "gender"})
 public class PersonVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-    @JsonProperty("first_name")
-	private String firstName;
-    @JsonProperty("last_name")
-	private String lastName;
+	
+//    @JsonProperty("first_name")
+//    @Mapping("firstName")
+    private String firstName;
+    
+//    @JsonProperty("last_name")
+//    @Mapping("lastName")
+    private String lastName;
 	private String address;
 	private String gender;
 	
@@ -109,4 +116,11 @@ public class PersonVO implements Serializable {
 			return false;
 		return true;
 	}
+
+    @Override
+    public String toString() {
+        return "PersonVO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
+                + ", gender=" + gender + "]";
+    }
+	
 }

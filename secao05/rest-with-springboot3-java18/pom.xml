@@ -22,6 +22,7 @@
 		<testcontainers.version>1.19.6</testcontainers.version>
 		<rest-assured.version>4.5.0</rest-assured.version>
 		<java-jwt.version>3.18.3</java-jwt.version>
+		<jacoco.reportPath>${project.basedir}/target/jacoco.exec</jacoco.reportPath>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -52,6 +53,11 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>com.fasterxml.woodstox</groupId>
+		  <artifactId>woodstox-core</artifactId>
+		  <version>6.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -114,7 +120,15 @@
 			<!-- <version>${testcontainers.version}</version>  -->
 			<scope>test</scope>
 		</dependency>
-
+		
+		<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin 
+		<dependency>
+		    <groupId>org.jacoco</groupId>
+		    <artifactId>jacoco-maven-plugin</artifactId>
+		    <version>0.8.11</version>
+		</dependency>
+		-->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -150,6 +164,57 @@
 			         </exclusions>
 			      </dependency>
 			   </dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.11</version>
+				<!--
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+				-->
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+								<element>BUNDLE</element>
+									<limits>
+										<limit>
+											<counter>COMPLEXITY</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.60</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<destFile>${jacoco.reportPath}</destFile>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
