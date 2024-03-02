@@ -15,6 +15,7 @@ import br.com.xmrtecnologia.restwithspringboot3java18.app.mapper.DozerMapper;
 //import br.com.xmrtecnologia.restwithspringboot3java18.app.mapper.custom.PersonMapper;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.model.Person;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.repositories.PersonRepository;
+import jakarta.transaction.Transactional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -99,7 +100,21 @@ public class PersonServices {
         vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
         return vo;
     }
-    
+
+    @Transactional
+    public PersonVO disablePerson(Long id) {
+        
+        logger.info("Disabling one person!");
+        
+        repository.disablePerson(id);
+        
+        var entity = repository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        var vo = DozerMapper.parseObject(entity, PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        return vo;
+    }
+
     public void delete(Long id) {
         
         logger.info("Deleting one person!");

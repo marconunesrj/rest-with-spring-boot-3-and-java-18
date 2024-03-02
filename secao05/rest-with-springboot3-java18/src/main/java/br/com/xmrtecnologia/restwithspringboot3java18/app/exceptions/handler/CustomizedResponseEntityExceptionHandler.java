@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.xmrtecnologia.restwithspringboot3java18.app.config.Generated;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.exceptions.ExceptionResponse;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.exceptions.InvalidJwtAuthenticationException;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.exceptions.RequiredObjectIsNullException;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.exceptions.ResourceNotFoundException;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.exceptions.UnsupportedMathOperationException;
 
+@Generated  // Utilizada para não fazer parte dos testes coverage jacoco
 @ControllerAdvice
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler{

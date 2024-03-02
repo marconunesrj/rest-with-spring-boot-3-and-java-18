@@ -4,10 +4,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.xmrtecnologia.restwithspringboot3java18.app.config.Generated;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.converters.NumberConverter;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.exceptions.UnsupportedMathOperationException;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.utils.SimpleMath;
 
+@Generated  // Utilizada para não fazer parte dos testes coverage jacoco
 @RestController
 public class MathController {
     

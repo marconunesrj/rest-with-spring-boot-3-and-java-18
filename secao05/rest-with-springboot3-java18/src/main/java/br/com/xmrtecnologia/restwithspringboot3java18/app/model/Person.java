@@ -1,18 +1,20 @@
 package br.com.xmrtecnologia.restwithspringboot3java18.app.model;
 
 import java.io.Serializable;
-import java.util.Date;
+//import java.util.Date;
 import java.util.Objects;
 
+import br.com.xmrtecnologia.restwithspringboot3java18.app.config.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+//import jakarta.persistence.Temporal;
+//import jakarta.persistence.TemporalType;
 
+@Generated  // Utilizada para não fazer parte dos testes coverage jacoco
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
@@ -34,7 +36,10 @@ public class Person implements Serializable {
     
     @Column(nullable = false, length = 6)
     private String gender;
-    
+
+    @Column(nullable = false)
+    private Boolean enabled;
+
 //    @Column(name = "birth_day", nullable = true)
 //    @Temporal(TemporalType.DATE)
 //    private Date birthDay;
@@ -81,18 +86,17 @@ public class Person implements Serializable {
         this.gender = gender;
     }
 
-//    public Date getBirthDay() {
-//        return birthDay;
-//    }
-//
-//    public void setBirthDay(Date birthDay) {
-//        this.birthDay = birthDay;
-//    }
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, firstName, gender, id, lastName);
-//        return Objects.hash(address, birthDay, firstName, gender, id, lastName);
+        return Objects.hash(address, enabled, firstName, gender, id, lastName);
     }
 
     @Override
@@ -104,12 +108,15 @@ public class Person implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Person other = (Person) obj;
-        return Objects.equals(address, other.address) && Objects.equals(firstName, other.firstName) 
-                && Objects.equals(gender, other.gender)
+        return Objects.equals(address, other.address) && Objects.equals(enabled, other.enabled)
+                && Objects.equals(firstName, other.firstName) && Objects.equals(gender, other.gender)
                 && Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName);
-//        return Objects.equals(address, other.address) && Objects.equals(birthDay, other.birthDay)
-//                && Objects.equals(firstName, other.firstName) && Objects.equals(gender, other.gender)
-//                && Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName);
+    }
+
+    @Override
+    public String toString() {
+        return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
+                + ", gender=" + gender + ", enabled=" + enabled + "]";
     }
 
 }

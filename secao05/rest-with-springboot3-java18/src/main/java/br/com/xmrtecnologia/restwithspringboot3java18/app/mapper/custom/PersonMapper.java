@@ -2,9 +2,11 @@ package br.com.xmrtecnologia.restwithspringboot3java18.app.mapper.custom;
 
 import org.springframework.stereotype.Service;
 
+import br.com.xmrtecnologia.restwithspringboot3java18.app.config.Generated;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.data.vo.v2.PersonVOV2;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.model.Person;
 
+@Generated  // Utilizada para não fazer parte dos testes coverage jacoco
 @Service
 public class PersonMapper {
 	
