@@ -3542,6 +3542,113 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Upload Download File",
+			"item": [
+				{
+					"name": "Upload One File",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{BearerToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Marcos/Pictures/2020-06-11_03-49-21-13908b885b69032ed65fffc016ee4d2f.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/file/v1/uploadFile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"v1",
+								"uploadFile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Mutiple Files",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{BearerToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/C:/ambiente-desenvolvimento/Linux.txt",
+										"/C:/ambiente-desenvolvimento/Padrao de Message Commit.txt"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/file/v1/uploadMultipleFiles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"v1",
+								"uploadMultipleFiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download File",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{BearerToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/file/v1/downloadFile/2020-06-11_03-49-21-13908b885b69032ed65fffc016ee4d2f.png",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"v1",
+								"downloadFile",
+								"2020-06-11_03-49-21-13908b885b69032ed65fffc016ee4d2f.png"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
