@@ -6,9 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//import java.util.Date;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -17,7 +14,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -27,6 +23,7 @@ import br.com.xmrtecnologia.restwithspringboot3java18.app.data.vo.v1.security.To
 import br.com.xmrtecnologia.restwithspringboot3java18.app.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.integrationtests.vo.AccountCredentialsVO;
 import br.com.xmrtecnologia.restwithspringboot3java18.app.integrationtests.vo.PersonVO;
+import br.com.xmrtecnologia.restwithspringboot3java18.app.integrationtests.vo.pagedmodels.PagedModelPerson;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -65,7 +62,6 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
                     .when()
                 .post()
                     .then()
-                        .log().all()
                         .statusCode(200)
                             .extract()
                             .body()
@@ -86,95 +82,77 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
     public void testCreate() throws JsonMappingException, JsonProcessingException {
         mockPerson();
         
-        System.out.println("-----------");
-        System.out.println("Person Before Create");
-        System.out.println(person);
-        
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .accept(TestConfigs.CONTENT_TYPE_XML)
                     .body(person)
-                .when()
+                    .when()
                     .post()
                 .then()
-                    .log().all()
                     .statusCode(200)
                         .extract()
                         .body()
                             .asString();
         
-        System.out.println("-----------");
-        System.out.println("Content");
-        System.out.println(content);
+        PersonVO persistedPerson = objectMapper.readValue(content, PersonVO.class);
+        person = persistedPerson;
         
-        person = objectMapper.readValue(content, PersonVO.class);
+        assertNotNull(persistedPerson);
         
-        System.out.println("-----------");
-        System.out.println("Person After Create");
-        System.out.println(person);
-        System.out.println("-----------");
+        assertNotNull(persistedPerson.getId());
+        assertNotNull(persistedPerson.getFirstName());
+        assertNotNull(persistedPerson.getLastName());
+        assertNotNull(persistedPerson.getAddress());
+        assertNotNull(persistedPerson.getGender());
+
+        assertTrue(persistedPerson.getEnabled());
         
-        assertNotNull(person.getId());
-        assertNotNull(person.getFirstName());
-        assertNotNull(person.getLastName());
-        assertNotNull(person.getAddress());
-        assertNotNull(person.getGender());
-        assertTrue(person.getId() > 0);
-        assertEquals("Nelson", person.getFirstName());
-        assertEquals("Piquet", person.getLastName());
-        assertEquals("Brasília - DF - Brasil", person.getAddress());
-        assertEquals("Male", person.getGender());
+        assertTrue(persistedPerson.getId() > 0);
+        
+        assertEquals("Nelson", persistedPerson.getFirstName());
+        assertEquals("Piquet", persistedPerson.getLastName());
+        assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
+        assertEquals("Male", persistedPerson.getGender());
     }
 
     @Test
     @Order(2)
     public void testUpdate() throws JsonMappingException, JsonProcessingException {
-
-        System.out.println("-----------");
-        System.out.println("Person Before Update");
-        System.out.println(person);
-        
         person.setLastName("Piquet Souto Maior");
         
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .accept(TestConfigs.CONTENT_TYPE_XML)
                     .body(person)
-                .when()
+                    .when()
                     .put()
-//                    .post()
                 .then()
-                    .log().all()
                     .statusCode(200)
                         .extract()
                         .body()
                             .asString();
         
-        System.out.println("-----------");
-        System.out.println("Content");
-        System.out.println(content);
+        PersonVO persistedPerson = objectMapper.readValue(content, PersonVO.class);
+        person = persistedPerson;
         
-        PersonVO bookUpdated = objectMapper.readValue(content, PersonVO.class);
+        assertNotNull(persistedPerson);
         
-        System.out.println("-----------");
-        System.out.println("Person bookUpdated");
-        System.out.println(bookUpdated);
-        System.out.println("-----------");
+        assertNotNull(persistedPerson.getId());
+        assertNotNull(persistedPerson.getFirstName());
+        assertNotNull(persistedPerson.getLastName());
+        assertNotNull(persistedPerson.getAddress());
+        assertNotNull(persistedPerson.getGender());
         
+        assertTrue(persistedPerson.getEnabled());
         
-        assertNotNull(bookUpdated.getId());
-        assertNotNull(bookUpdated.getFirstName());
-        assertNotNull(bookUpdated.getLastName());
-        assertNotNull(bookUpdated.getAddress());
-        assertNotNull(bookUpdated.getGender());
+        assertEquals(person.getId(), persistedPerson.getId());
         
-        assertEquals(person.getId(), bookUpdated.getId());
-        
-        assertEquals("Nelson", bookUpdated.getFirstName());
-        assertEquals("Piquet Souto Maior", bookUpdated.getLastName());
-        assertEquals("Brasília - DF - Brasil", bookUpdated.getAddress());
-        assertEquals("Male", bookUpdated.getGender());
+        assertEquals("Nelson", persistedPerson.getFirstName());
+        assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
+        assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
+        assertEquals("Male", persistedPerson.getGender());
     }
+    
 
     @Test
     @Order(3)
@@ -184,7 +162,7 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .accept(TestConfigs.CONTENT_TYPE_XML)
                     .pathParam("id", person.getId())
-                .when()
+                    .when()
                     .patch("{id}")
                 .then()
                     .statusCode(200)
@@ -221,29 +199,33 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .accept(TestConfigs.CONTENT_TYPE_XML)
                     .pathParam("id", person.getId())
-                .when()
+                    .when()
                     .get("{id}")
                 .then()
-                    .log().all()
                     .statusCode(200)
                         .extract()
                         .body()
                             .asString();
         
-        PersonVO foundBook = objectMapper.readValue(content, PersonVO.class);
+        PersonVO persistedPerson = objectMapper.readValue(content, PersonVO.class);
+        person = persistedPerson;
         
-        assertNotNull(foundBook.getId());
-        assertNotNull(foundBook.getFirstName());
-        assertNotNull(foundBook.getLastName());
-        assertNotNull(foundBook.getAddress());
-        assertNotNull(foundBook.getGender());
-    
-        assertEquals(person.getId(), foundBook.getId());
-          
-        assertEquals("Nelson", foundBook.getFirstName());
-        assertEquals("Piquet Souto Maior", foundBook.getLastName());
-        assertEquals("Brasília - DF - Brasil", foundBook.getAddress());
-        assertEquals("Male", foundBook.getGender());
+        assertNotNull(persistedPerson);
+        
+        assertNotNull(persistedPerson.getId());
+        assertNotNull(persistedPerson.getFirstName());
+        assertNotNull(persistedPerson.getLastName());
+        assertNotNull(persistedPerson.getAddress());
+        assertNotNull(persistedPerson.getGender());
+        
+        assertFalse(persistedPerson.getEnabled());
+
+        assertEquals(person.getId(), persistedPerson.getId());
+        
+        assertEquals("Nelson", persistedPerson.getFirstName());
+        assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
+        assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
+        assertEquals("Male", persistedPerson.getGender());
     }
     
     @Test
@@ -257,7 +239,6 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
                 .when()
                 .delete("{id}")
             .then()
-                .log().all()
                 .statusCode(204);
     }
     
@@ -268,16 +249,17 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
         var content = given().spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_XML)
                 .accept(TestConfigs.CONTENT_TYPE_XML)
-                    .when()
+                .queryParams("page", 3, "size", 10, "direction", "asc")
+                .when()
                     .get()
                 .then()
-                    .log().all()
                     .statusCode(200)
                         .extract()
                         .body()
                             .asString();
         
-        List<PersonVO> people = objectMapper.readValue(content, new TypeReference<List<PersonVO>>() {});
+        PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
+        var people = wrapper.getContent();
         
         PersonVO foundPersonOne = people.get(0);
         
@@ -286,33 +268,74 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
         assertNotNull(foundPersonOne.getLastName());
         assertNotNull(foundPersonOne.getAddress());
         assertNotNull(foundPersonOne.getGender());
-          
-        assertEquals(1, foundPersonOne.getId());
-          
-        assertEquals("Ayrton", foundPersonOne.getFirstName());
-        assertEquals("Senna", foundPersonOne.getLastName());
-        assertEquals("São Paulo", foundPersonOne.getAddress());
+
+        assertTrue(foundPersonOne.getEnabled());
+        
+        assertEquals(677, foundPersonOne.getId());
+        
+        assertEquals("Alic", foundPersonOne.getFirstName());
+        assertEquals("Terbrug", foundPersonOne.getLastName());
+        assertEquals("3 Eagle Crest Court", foundPersonOne.getAddress());
         assertEquals("Male", foundPersonOne.getGender());
-          
+        
         PersonVO foundPersonSix = people.get(5);
-          
+        
         assertNotNull(foundPersonSix.getId());
         assertNotNull(foundPersonSix.getFirstName());
         assertNotNull(foundPersonSix.getLastName());
         assertNotNull(foundPersonSix.getAddress());
         assertNotNull(foundPersonSix.getGender());
-          
-          assertEquals(9, foundPersonSix.getId());
-          
-          assertEquals("Nelson", foundPersonSix.getFirstName());
-          assertEquals("Mvezo", foundPersonSix.getLastName());
-          assertEquals("Mvezo – South Africa", foundPersonSix.getAddress());
-          assertEquals("Male", foundPersonSix.getGender());
+
+        assertTrue(foundPersonSix.getEnabled());
+        
+        assertEquals(911, foundPersonSix.getId());
+        
+        assertEquals("Allegra", foundPersonSix.getFirstName());
+        assertEquals("Dome", foundPersonSix.getLastName());
+        assertEquals("57 Roxbury Pass", foundPersonSix.getAddress());
+        assertEquals("Female", foundPersonSix.getGender());
     }
 
-    
     @Test
     @Order(7)
+    public void testFindByName() throws JsonMappingException, JsonProcessingException {
+        
+        var content = given().spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
+                .accept(TestConfigs.CONTENT_TYPE_XML)
+                .pathParam("firstName", "ayr")
+                .queryParams("page", 0, "size", 6, "direction", "asc")
+                    .when()
+                    .get("findPersonByName/{firstName}")
+                .then()
+                    .statusCode(200)
+                        .extract()
+                        .body()
+                        .asString();
+    
+        PagedModelPerson wrapper = objectMapper.readValue(content, PagedModelPerson.class);
+        var people = wrapper.getContent();
+    
+        PersonVO foundPersonOne = people.get(0);
+        
+        assertNotNull(foundPersonOne.getId());
+        assertNotNull(foundPersonOne.getFirstName());
+        assertNotNull(foundPersonOne.getLastName());
+        assertNotNull(foundPersonOne.getAddress());
+        assertNotNull(foundPersonOne.getGender());
+
+        assertTrue(foundPersonOne.getEnabled());
+        
+        assertEquals(1, foundPersonOne.getId());
+        
+        assertEquals("Ayrton", foundPersonOne.getFirstName());
+        assertEquals("Senna", foundPersonOne.getLastName());
+        assertEquals("São Paulo", foundPersonOne.getAddress());
+        assertEquals("Male", foundPersonOne.getGender());
+    }
+    
+    @Test
+    @Order(8)
     public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
         
         RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
@@ -328,8 +351,35 @@ public class PersonControllerXmlTest extends AbstractIntegrationTest {
                 .when()
                 .get()
             .then()
-                .log().all()
                 .statusCode(403);
+    }
+    
+    @Test
+    @Order(9)
+    public void testHATEOAS() throws JsonMappingException, JsonProcessingException {
+        
+        var content = given().spec(specification)
+                .contentType(TestConfigs.CONTENT_TYPE_XML)
+                .accept(TestConfigs.CONTENT_TYPE_XML)
+                .queryParams("page", 3, "size", 10, "direction", "asc")
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                        .extract()
+                        .body()
+                            .asString();
+        
+        assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/677</href></links>"));
+        assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/846</href></links>"));
+        assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1/714</href></links>"));
+        
+        assertTrue(content.contains("<links><rel>first</rel><href>http://localhost:8888/api/person/v1?direction=asc&amp;page=0&amp;size=10&amp;sort=firstName,asc</href></links>"));
+        assertTrue(content.contains("<links><rel>prev</rel><href>http://localhost:8888/api/person/v1?direction=asc&amp;page=2&amp;size=10&amp;sort=firstName,asc</href></links>"));
+        assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/person/v1?page=3&amp;size=10&amp;direction=asc</href></links>"));
+        assertTrue(content.contains("<links><rel>next</rel><href>http://localhost:8888/api/person/v1?direction=asc&amp;page=4&amp;size=10&amp;sort=firstName,asc</href></links>"));
+        assertTrue(content.contains("<links><rel>last</rel><href>http://localhost:8888/api/person/v1?direction=asc&amp;page=100&amp;size=10&amp;sort=firstName,asc</href></links>"));
+        assertTrue(content.contains("<page><size>10</size><totalElements>1007</totalElements><totalPages>101</totalPages><number>3</number></page>"));
     }
     
     private void mockPerson() {
