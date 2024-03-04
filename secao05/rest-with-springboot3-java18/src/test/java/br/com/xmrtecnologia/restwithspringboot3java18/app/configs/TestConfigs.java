@@ -3,7 +3,8 @@ package br.com.xmrtecnologia.restwithspringboot3java18.app.configs;
 public class TestConfigs {
 
     // Porta padrão que o RestAssured vai utilizar para se conectar com o container para executar os testes
-	public static final int SERVER_PORT = 8888;
+    public static final int SERVER_PORT = 8888;
+//    public static final int SERVER_PORT = 8081;   // Porta de acesso para o Docker, configurada no docker-compose.yml
 	
     public static final String HEADER_PARAM_AUTHORIZATION = "Authorization";
     public static final String HEADER_PARAM_ORIGIN = "Origin";

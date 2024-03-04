@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.xmrtecnologia</groupId>
-	<artifactId>rest-with-springboot3-java18</artifactId>
+	<artifactId>rest-with-springboot3-java21</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rest-with-springboot3-java18</name>
+	<name>rest-with-springboot3-java21</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>

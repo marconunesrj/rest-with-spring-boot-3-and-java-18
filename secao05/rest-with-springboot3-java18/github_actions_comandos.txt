@@ -1,0 +1,5 @@
+Git Hub Actions
+
+
+1) Ir para o github do projeto
+2) Clicar em Settings
