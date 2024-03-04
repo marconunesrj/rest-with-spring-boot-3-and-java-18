@@ -1,7 +1,6 @@
 package br.com.xmrtecnologia.restwithspringboot3java18.app.integrationtests.vo;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
