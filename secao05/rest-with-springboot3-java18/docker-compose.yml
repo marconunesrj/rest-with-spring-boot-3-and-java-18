@@ -19,7 +19,7 @@ services:
     networks:
       - erudio-network
   rest-with-spring-boot-erudio:
-    image: marconunesrj007/rest-with-spring-boot-erudio:v_0.0.1
+    image: marconunesrj007/rest-with-spring-boot-erudio
     restart: always
     build: .         # Procura o arquivo Dockerfile no mesmo diretório do arquivo docker-compose.yml 
     working_dir: /rest-with-springboot3-and-java21
